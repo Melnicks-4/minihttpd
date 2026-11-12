@@ -1,1 +1,10 @@
-body { font-family: sans-serif; background: #eef; text-align: center; }
+body {
+    font-family: sans-serif;
+    background: #eef;
+    text-align: center;
+    padding: 40px;
+}
+
+h1 {
+    color: #334477;
+}
