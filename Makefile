@@ -1,21 +1,21 @@
-CC      = gcc
-CFLAGS  = -Wall -Wextra -Werror -std=gnu11 -g -Iinclude
-TARGET  = minihttpd
-SRCS    = $(wildcard src/*.c)
-OBJS    = $(SRCS:.c=.o)
+CC = gcc
+
+CFLAGS = -Wall -Wextra -Wpedantic -Iinclude -D_XOPEN_SOURCE=700
+
+SRC = src/main.c \
+      src/server.c \
+      src/http.c \
+      src/mime.c \
+      src/files.c
+
+TARGET = minihttpd
 
 all: $(TARGET)
 
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $(OBJS)
-
-src/%.o: src/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-run: all
-	./$(TARGET) 8080
+$(TARGET): $(SRC)
+	$(CC) $(CFLAGS) $(SRC) -o $(TARGET)
 
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -f $(TARGET)
 
-.PHONY: all run clean
+.PHONY: all clean
