@@ -8,3 +8,11 @@ body {
 h1 {
     color: #334477;
 }
+
+.imagen-proyecto {
+    width: 400px;
+    height: 250px;
+    object-fit: contain;
+    display: block;
+    margin: 20px auto;
+}
