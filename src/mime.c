@@ -1,40 +1,34 @@
 #include <string.h>
+#include <strings.h>
 #include "mime.h"
 
-const char *mime_type(const char *filename)
-{
-    const char *extension = strrchr(filename, '.');
+struct mime_entry {
+    const char *ext;
+    const char *type;
+};
 
-    if (extension == NULL)
+static const struct mime_entry table[] = {
+    {".html", "text/html"},
+    {".css",  "text/css"},
+    {".js",   "application/javascript"},
+    {".png",  "image/png"},
+    {".jpg",  "image/jpeg"},
+};
+
+const char *mime_from_path(const char *path)
+{
+    /* nombre del archivo */
+    const char *slash = strrchr(path, '/');
+    const char *name = slash ? slash + 1 : path;
+
+    const char *dot = strrchr(name, '.');
+    if (dot == NULL)
         return "application/octet-stream";
 
-    if (strcmp(extension, ".html") == 0)
-        return "text/html";
-
-    if (strcmp(extension, ".css") == 0)
-        return "text/css";
-
-    if (strcmp(extension, ".js") == 0)
-        return "application/javascript";
-
-    if (strcmp(extension, ".png") == 0)
-        return "image/png";
-
-    if (strcmp(extension, ".jpg") == 0 ||
-        strcmp(extension, ".jpeg") == 0)
-        return "image/jpeg";
-
-    if (strcmp(extension, ".gif") == 0)
-        return "image/gif";
-
-    if (strcmp(extension, ".svg") == 0)
-        return "image/svg+xml";
-
-    if (strcmp(extension, ".txt") == 0)
-        return "text/plain";
-
-    if (strcmp(extension, ".ico") == 0)
-        return "image/x-icon";
+    for (size_t i = 0; i < sizeof(table) / sizeof(table[0]); i++) {
+        if (strcasecmp(dot, table[i].ext) == 0)
+            return table[i].type;
+    }
 
     return "application/octet-stream";
 }
