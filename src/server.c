@@ -19,7 +19,7 @@
 #include "server.h"
 
 #define MAX_EVENTS       64
-#define MAX_FDS          4096
+#define MAX_FDS          1024
 #define WRITE_TIMEOUT_MS 5000
 
 /* Estado de cada cliente conectado */
